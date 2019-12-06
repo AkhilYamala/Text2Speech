@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Akronim&display=swap" rel="stylesheet">
+    <title>Features</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: sans-serif; 
+            background-color : #000;
+            color : #eee;
+            padding : 0;
+            margin : 0;
+        }
+        header {
+            font-family: 'Akronim', cursive; 
+            font-size: 4rem;
+            padding : 5px 10px;
+        }
+        table, tr, th, td {
+            font-size : 16px;
+            padding : 5px;
+            border : solid 2px #eee;
+            color : #fff;
+        }
+        th, td {
+            margin : 5px 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>FileAssist</header>
+    <div class="editor">
+
+    </div>
+    <table>
+        <tr>
+            <th>Index</th>
+            {% for i in range(0, header| length) %}
+                <th>{{ header[i] }}</th>
+            {% endfor %}
+        </tr>
+
+        {% for i in range(0, data| length) %}
+            <tr>
+                <td><a href="#" onclick="return setStart('{{i}}')">{{ i+1 }}</a></td>
+                <script>
+                    function setStart(ele) {
+                        return false;
+                    }
+                </script>
+                {% for j in range(0, data[i]| length) %}
+                    <td>{{ data[i][j] }}</td>
+                    <!-- logic to speech -->
+                    <script>                        
+                        function speakLogic() {
+                            var speech = new SpeechSynthesisUtterance();
+                            speech.text = '{{ data[i][j] }}';
+                            var t;
+                            speech.onstart = function() {
+                                console.log('start');
+                            };
+                            // alert('{{ data[i][j] }}');
+                            speech.onend = function() {
+                                console.log("end");
+                            };
+                            speechSynthesis.speak(speech);
+                        }
+                        window.setTimeout(speakLogic(), 5000);
+                    </script>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

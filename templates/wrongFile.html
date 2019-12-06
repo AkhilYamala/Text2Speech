@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wrong file type</title>
+    <style>
+            * {
+                box-sizing: border-box;
+                font-family: sans-serif; 
+                background-color : #000;
+                color : #eee;
+                padding : 0;
+                margin : 0;
+            }
+            hr {
+                width : 40%;
+                position: relative;
+                left : 5%;
+            }
+            header {
+                font-family: 'Akronim', cursive; 
+                font-size: 4rem;
+                padding : 5px 10px;
+            }
+            .container {
+                display: flex;
+                flex-direction: row;
+                height: 100%;
+            }
+            .left {
+                flex : 3;
+                font-size: 20px;
+                letter-spacing: 0.8px;
+                position: relative;
+            }
+            .text {
+                display: flex;
+                margin : 30% 10%;
+                padding : 20px 0;
+                flex-direction: column;
+                align-items: center;
+                border : dotted 3px #eee;
+            }
+            .container img {
+                height : 100vh;
+                width : 50vw;
+            }
+            strong {
+                color : yellow;
+            }
+    </style>
+</head>
+<body>
+    <header>FileAssist</header>
+    <hr>
+    <div class="container">
+        <div class="left">
+            <div class="text">
+                <p>Incorrect file type. Please enter a <strong>CSV</strong> file</p>
+                <a href="/">Move to Home page</a>
+            </div>
+        </div>
+        <div class="right">
+            <img src="/static/back1.jpg" alt="images"/>
+        </div>
+    </div>   
+</body>
+</html>

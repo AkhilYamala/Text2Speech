@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: sans-serif; 
+            background-color : #000;
+            color : #eee;
+            padding : 0;
+            margin : 0;
+        }
+        header {
+            font-family: 'Akronim', cursive; 
+            font-size: 4rem;
+            padding : 5px 10px;
+        }
+        li {
+            list-style: none;
+        }
+        hr {
+            width : 40%;
+            position: relative;
+            left : 5%;
+        }
+        /* left-right */
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        .left {
+            flex : 3;
+        }
+
+        /* side-image */
+        .container img {
+            height : 100vh;
+            width : 50vw;
+        }
+        
+        /* hiding default input styles */
+        #file-input {
+            width : 0.1px;
+            height : 0.1px;
+            opacity: 0;
+            overflow: hidden;   
+            position: absolute;
+            z-index: -1;
+            background: #eee; 
+        }
+        /* button */
+        .upload {
+            height : 60%;
+        }
+        /* center */
+        .center {
+            display : flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* styling upload */
+        #file-input + label {
+            font-size: 1.25rem;
+            width : 250px;
+            height : 80px;
+            color : #eee;
+            padding : 25px;
+            border : 1px solid #eee;
+            transition: background-color linear 0.5s;
+        }
+        /* hover effect for button */
+        #file-input + label:hover {
+            background-color: #eee;
+            font-weight: 600;
+            color : black;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .cols {
+            margin : 20% 10% 3% 10%; 
+            font-size : 32px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .text {
+            position : relative;
+            top : 4rem;
+            left : 4rem;
+        }
+        .content {
+            letter-spacing: 0.8px;
+            font-size: 2rem;
+            font-weight: 100;
+            line-height: 2rem;
+            text-align : center;
+            color : rgb(189, 185, 185);
+        }
+        .selection {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin-left : 20%;
+            font-size: 22px;
+            line-height: 1.5rem;
+        }
+        .selection input[type=submit] {
+            margin-top : 3%;
+            font-size : 22px;
+            width : 180px;
+            height : 40px;
+            transition: background-color linear 0.4s;
+        }
+        .selection input[type=submit]:hover {
+            cursor: pointer;
+            font-weight: 600;
+            background-color: #eee;
+            color : #000;
+        }
+    </style>
+</head>
+<body>
+    <header>FileAssist</header>
+    <hr>
+    <div class="container">
+        <div class="left">
+            <div class="text">
+                <p class="content">
+                    A talk back application for csv files<br>
+                    Please upload a <strong>CSV </strong>file
+                </p>
+            </div>
+            <div class="upload center">
+                <form id='upload-form' method=post enctype=multipart/form-data>
+                    <input id='file-input' type=file name='file'/>
+                    <!-- accepts id -->
+                    <label for="file-input">Upload a file</label>
+                </form>
+            </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <!-- hide upload button -->
+                    <script>
+                        document.querySelector('.upload').classList.add('hidden');
+                        document.querySelector('.text').classList.add('hidden');
+                    </script>
+
+                    <!-- display form -->
+                    <div class="cols">
+                        <p>Select the columns</p>
+                    </div>
+                    {% for msg in messages %}
+                        <form class='selection' action="{{ url_for('handle_data') }}" method="post">
+                                {% for i in range(0, msg| length)  %}
+                                    <li>
+                                        <input id={{i}} type="checkbox" name='index' value={{i}}>
+                                        <label for="{{i}}"></label>{{msg[i]}}
+                                    </li>                 
+                                {% endfor %}                    
+                                <input type="submit" value="I'm done">
+                        </form>                        
+                    {% endfor %}
+                {% endif %}       
+            {% endwith %}
+        
+        </div>
+        <div class="right">
+            <img src="/static/back1.jpg" alt="images"/>
+        </div>            
+    </div>
+</body>
+
+<script>
+    // function print(n) {
+    //     console.log(n);
+    // }
+    document.getElementById('file-input').onchange = function() {
+        document.getElementById('upload-form').submit();
+    }
+    
+    // for clearing input on page refresh
+    function clearInput() {
+        document.getElementById('file-input').value = '';
+    }
+    window.onload = function() {
+        clearInput();
+    }
+</script>
+</html>
